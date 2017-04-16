@@ -2,9 +2,13 @@
 var casper = require('casper').create();
 phantom.injectJs('scripts/helper.js');
 phantom.injectJs('scripts/fight.js');
-var links;
-var nbFights = 10;
-var name = 'name', password = 'password';
+phantom.injectJs('env.js');
+
+var nbFights = 5; //or use nbFightsLeft();
+
+var myLeek = 'notEvenClose';
+//def in env.js
+//var name = 'name', password = 'password';
 
 casper.start('https://leekwars.com/login', function() {
   this.waitForSelector('#login-button', function() {
@@ -23,7 +27,9 @@ casper.then(function() {
     this.echo(this.getCurrentUrl());
   });
   this.wait(250, function() {
-    for(var i = 0; i < nbFights; i++) {
+    var nbFightsLeft = this.getHTML("span#farmer-fights");
+    console.log("fights to do : " + nbFightsLeft);
+    for(var i = 0; i < nbFightsLeft; i++) {
       fight();
     }
   });

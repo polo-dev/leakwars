@@ -8,20 +8,26 @@ function goToGarden() {
 }
 
 function nbFightsLeft() {
-  casper.then(function() {
-    this.waitForSelector('#farmer-fights', function() {
-      this.echo(this.exists('#farmer-fights'));
-      return this.fetchText('#farmer-fights');
-    });
-  })
+  casper.waitForSelector('#farmer-fights', function() {
+    this.echo(this.getHTML("span#farmer-fights"));
+    return this.getHTML("span#farmer-fights");
+  });
+}
+
+//on garden page, select your leek
+function chooseLeekToFight() {
+    casper.click('div[name="'+myLeek+'"]');
 }
 
 function fight() {
   casper.then(function() {
     goToGarden();
-    var leeks = this.getElementsAttribute('div[class="leek"]', 'leek');
-    this.click('div[leek="'+leeks[0]+'"]');
-    console.log("test fight to : " + leeks[0]);
-    this.wait(2000);
+    this.wait(250, function() {
+      chooseLeekToFight();
+      var leeks = this.getElementsAttribute('div[class="leek"]', 'leek');
+      this.click('div[leek="'+leeks[0]+'"]');
+      console.log("test fight to : " + leeks[0]);
+      this.wait(1750);
+    });
   });
 }

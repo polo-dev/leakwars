@@ -1,2 +1,2 @@
 # leakwars
-faire ces 100/50 combats par jours
+faire ses 100/50 combats par jours

@@ -15,15 +15,15 @@ function nbFightsLeft() {
 }
 
 //on garden page, select your leek
-function chooseLeekToFight(leak) {
-    casper.click('div[name="'+leak+'"]');
+function chooseLeekToFight(myLeek) {
+    casper.click('div[name="'+myLeek+'"]');
 }
 
-function fight(leak) {
+function fight(myLeek) {
   casper.then(function() {
     goToGarden();
     this.wait(250, function() {
-      chooseLeekToFight(leak);
+      chooseLeekToFight(myLeek);
       var leeks = this.getElementsAttribute('div[class="leek"]', 'leek');
       this.click('div[leek="'+leeks[0]+'"]');
       console.log("test fight to : " + leeks[0]);

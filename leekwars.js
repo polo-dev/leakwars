@@ -26,20 +26,22 @@ casper.then(function() {
     if(allFight)
         nbFights = this.getHTML("span#farmer-fights");
 
-    var nbFightsByLeak = Math.round(nbFights/myLeaks.length);
+    var nbFightsByLeek = Math.round(nbFights/myLeeks.length);
     console.log("fights to do : " + nbFights);
+    console.log('nbFightsByLeek : ' + nbFightsByLeek);
 
-    var y = 0; //first leak
-    var leak = myLeaks[y];
-    for(var i = 0; i < nbFights; i++) {
+    var y = 0, u = 0; //first leek and increment
+    var leek = myLeeks[y];
+    for(var i = 1; i <= nbFights; i++) {
       this.wait(250, function() {
-        if(nbFightsByLeak === i) {
-          nbFightsByLeak += i;
+        u++;
+        if(nbFightsByLeek == u) {
+          nbFightsByLeek += u;
           y++;
-          leak = myLeaks[y]
-          console.log("Change de poireau : " +leak);
+          leek = myLeeks[y]
+          console.log("Changement de poireau : " +leek);
         }
-          fight(leak);
+          fight(leek);
       })
     }
   });

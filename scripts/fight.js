@@ -1,7 +1,7 @@
 function goToGarden() {
   casper.thenOpen('https://leekwars.com/garden', function() {
     this.waitForSelector('.enemies .opponents .leek', function() {
-      this.echo(this.getCurrentUrl());
+      //this.echo(this.getCurrentUrl());
       //require('utils').dump(this.getElementsAttribute('div[class="leek"]', 'leek'));
     });
   });
@@ -15,19 +15,19 @@ function nbFightsLeft() {
 }
 
 //on garden page, select your leek
-function chooseLeekToFight() {
-    casper.click('div[name="'+myLeek+'"]');
+function chooseLeekToFight(leak) {
+    casper.click('div[name="'+leak+'"]');
 }
 
-function fight() {
+function fight(leak) {
   casper.then(function() {
     goToGarden();
     this.wait(250, function() {
-      chooseLeekToFight();
+      chooseLeekToFight(leak);
       var leeks = this.getElementsAttribute('div[class="leek"]', 'leek');
       this.click('div[leek="'+leeks[0]+'"]');
       console.log("test fight to : " + leeks[0]);
-      this.wait(1750);
+      this.wait(1000);
     });
   });
 }

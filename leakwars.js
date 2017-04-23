@@ -4,11 +4,7 @@ phantom.injectJs('scripts/helper.js');
 phantom.injectJs('scripts/fight.js');
 phantom.injectJs('env.js');
 
-var nbFights = 5; //or use nbFightsLeft();
-
-var myLeek = 'notEvenClose';
-//def in env.js
-//var name = 'name', password = 'password';
+//var myLeek = 'notEvenClose';
 
 casper.start('https://leekwars.com/login', function() {
   this.waitForSelector('#login-button', function() {
@@ -27,10 +23,24 @@ casper.then(function() {
     this.echo(this.getCurrentUrl());
   });
   this.wait(250, function() {
-    var nbFightsLeft = this.getHTML("span#farmer-fights");
-    console.log("fights to do : " + nbFightsLeft);
-    for(var i = 0; i < nbFightsLeft; i++) {
-      fight();
+    if(allFight)
+        nbFights = this.getHTML("span#farmer-fights");
+
+    var nbFightsByLeak = Math.round(nbFights/myLeaks.length);
+    console.log("fights to do : " + nbFights);
+
+    var y = 0; //first leak
+    var leak = myLeaks[y];
+    for(var i = 0; i < nbFights; i++) {
+      this.wait(250, function() {
+        if(nbFightsByLeak === i) {
+          nbFightsByLeak += i;
+          y++;
+          leak = myLeaks[y]
+          console.log("Change de poireau : " +leak);
+        }
+          fight(leak);
+      })
     }
   });
 });
